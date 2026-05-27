@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>정시컨설팅</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">2026 정시 분석</p>
+      <h1>정시컨설팅</h1>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="controls">
+      <section class="panel">
+        <h2>내 점수</h2>
+        <div class="score-grid">
+          <div class="score-row score-row-subject">
+            <label>국어 과목<select id="koreanSubject"></select></label>
+            <label>국어 표준점수<input id="koreanScore" type="text" inputmode="numeric"></label>
+          </div>
+          <div class="score-row score-row-subject">
+            <label>수학 과목<select id="mathSubject"></select></label>
+            <label>수학 표준점수<input id="mathScore" type="text" inputmode="numeric"></label>
+          </div>
+          <div class="score-row">
+            <label>영어 등급<input id="englishGrade" type="text" inputmode="numeric"></label>
+            <label>한국사 등급<input id="historyGrade" type="text" inputmode="numeric"></label>
+          </div>
+          <div class="score-row score-row-subject">
+            <label>탐구 1 과목<select id="inquirySubject1"></select></label>
+            <label>탐구 1 표준점수<input id="inquiryScore1" type="text" inputmode="numeric"></label>
+          </div>
+          <div class="score-row score-row-subject">
+            <label>탐구 2 과목<select id="inquirySubject2"></select></label>
+            <label>탐구 2 표준점수<input id="inquiryScore2" type="text" inputmode="numeric"></label>
+          </div>
+        </div>
+        <p class="note school-note">내신 기본값 적용</p>
+      </section>
+
+      <section class="panel">
+        <h2>필터</h2>
+        <div class="segmented" role="tablist" aria-label="계열">
+          <button id="scienceTab" class="active" type="button">이과</button>
+          <button id="humanitiesTab" type="button">문과</button>
+        </div>
+        <label>검색
+          <input id="query" type="search" placeholder="대학, 전공, 지역">
+        </label>
+        <label>합격가능성
+          <select id="statusFilter">
+            <option value="">전체</option>
+          </select>
+        </label>
+        <label>모집군
+          <select id="roundFilter">
+            <option value="">전체</option>
+          </select>
+        </label>
+        <label>지역
+          <select id="provinceFilter">
+            <option value="">전체</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="panel">
+        <h2>내신점수 <span class="panel-sub">직접입력</span></h2>
+        <p class="note panel-note">미입력 시 비교내신 기본값이 자동 적용됩니다. 내신 반영 대학만 표시합니다.</p>
+        <div id="schoolInputPanel" class="school-panel"></div>
+      </section>
+    </aside>
+
+    <section class="results">
+      <div class="toolbar">
+        <h2 id="resultTitle">이과계열 분석결과</h2>
+        <label class="sort-control">정렬
+          <select id="sortBy">
+            <option value="status">합격가능성</option>
+            <option value="totalScore">수능+내신 높은순</option>
+            <option value="percentile">누백 낮은순</option>
+            <option value="university">대학명</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="cards" class="cards" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
