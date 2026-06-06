@@ -25,6 +25,47 @@ body {
   color: var(--ink);
 }
 
+[hidden] {
+  display: none !important;
+}
+
+.password-gate {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.password-panel {
+  width: min(360px, 100%);
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: 0 18px 50px rgba(23, 33, 29, 0.08);
+}
+
+.password-panel h1 {
+  margin-bottom: 24px;
+}
+
+.password-panel button {
+  margin-top: 14px;
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.password-error {
+  min-height: 18px;
+  margin: 10px 0 0;
+  color: var(--bad);
+  font-size: 13px;
+}
+
 .app-header {
   display: flex;
   justify-content: space-between;
@@ -153,6 +194,35 @@ select {
 .school-note::before {
   content: "✓";
   font-size: 11px;
+}
+
+.score-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.score-actions .school-note {
+  margin: 0;
+}
+
+.reset-button {
+  width: auto;
+  min-height: 32px;
+  padding: 6px 12px;
+  border-color: var(--line);
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.reset-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .panel-note {

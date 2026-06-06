@@ -3,6 +3,7 @@
   subjectIndex: null,
   input: {},
   schoolInput: {},   // 내신 직접입력: { [code]: number | "" }
+  initialized: false,
   track: "science",
   query: "",
   status: "",
@@ -11,6 +12,7 @@
   sortBy: "status",
 };
 
+const APP_PASSWORD = "0428";
 const statusRank = {
   "적정점수 이상": 1,
   "예상점수 이상": 2,
@@ -492,6 +494,16 @@ function readInput() {
   state.input = Object.fromEntries(inputIds.map((id) => [id, $(id)?.value ?? ""]));
 }
 
+function applyDefaultInput() {
+  const defaults = state.data?.meta?.defaultInput || {};
+  inputIds.forEach((id) => {
+    if ($(id) && defaults[id] !== undefined) {
+      $(id).value = defaults[id];
+    }
+  });
+  readInput();
+}
+
 function fillSubjectSelect(id, values, selected) {
   const select = $(id);
   select.replaceChildren();
@@ -551,9 +563,14 @@ function bindEvents() {
       render();
     });
   });
+  $("resetScores")?.addEventListener("click", () => {
+    applyDefaultInput();
+    render();
+  });
 }
 
 async function init() {
+  if (state.initialized) return;
   try {
     const response = await fetch(`app-data.json?v=${Date.now()}`, { cache: "no-store" });
     if (!response.ok) throw new Error(`app-data.json 로드 실패 (${response.status})`);
@@ -572,14 +589,42 @@ async function init() {
   fillSubjectSelect("mathSubject", state.data.subjects.math, state.data.meta.defaultInput.mathSubject);
   fillSubjectSelect("inquirySubject1", state.data.subjects.inquiry, state.data.meta.defaultInput.inquirySubject1);
   fillSubjectSelect("inquirySubject2", state.data.subjects.inquiry, state.data.meta.defaultInput.inquirySubject2);
-  Object.entries(state.data.meta.defaultInput || {}).forEach(([key, value]) => {
-    if ($(key)) $(key).value = value;
-  });
-  readInput();
+  applyDefaultInput();
 
   bindEvents();
   refreshFilters();
   render();
+  state.initialized = true;
 }
 
-init();
+function showApp() {
+  $("passwordGate")?.setAttribute("hidden", "");
+  $("appShell")?.removeAttribute("hidden");
+  init();
+}
+
+function setupPasswordGate() {
+  if (sessionStorage.getItem("jungsiconsulting-auth") === "ok") {
+    showApp();
+    return;
+  }
+
+  $("appShell")?.setAttribute("hidden", "");
+  $("passwordGate")?.removeAttribute("hidden");
+  $("passwordInput")?.focus();
+
+  $("passwordForm")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const password = $("passwordInput")?.value.trim();
+    if (password === APP_PASSWORD) {
+      sessionStorage.setItem("jungsiconsulting-auth", "ok");
+      $("passwordError").textContent = "";
+      showApp();
+      return;
+    }
+    $("passwordError").textContent = "비밀번호가 올바르지 않습니다.";
+    $("passwordInput")?.select();
+  });
+}
+
+setupPasswordGate();
