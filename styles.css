@@ -199,8 +199,8 @@ select {
 .score-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 6px;
   margin-top: 12px;
 }
 
@@ -210,14 +210,14 @@ select {
 
 .reset-button {
   width: auto;
-  min-height: 32px;
-  padding: 6px 12px;
+  min-height: 28px;
+  padding: 4px 9px;
   border-color: var(--line);
   background: #fff;
   color: var(--ink);
   cursor: pointer;
   font-weight: 800;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .reset-button:hover {

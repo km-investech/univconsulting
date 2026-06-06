@@ -504,6 +504,13 @@ function applyDefaultInput() {
   readInput();
 }
 
+function resetScoreInputs() {
+  ["koreanScore", "mathScore", "englishGrade", "historyGrade", "inquiryScore1", "inquiryScore2"].forEach((id) => {
+    if ($(id)) $(id).value = "";
+  });
+  readInput();
+}
+
 function fillSubjectSelect(id, values, selected) {
   const select = $(id);
   select.replaceChildren();
@@ -564,7 +571,7 @@ function bindEvents() {
     });
   });
   $("resetScores")?.addEventListener("click", () => {
-    applyDefaultInput();
+    resetScoreInputs();
     render();
   });
 }
